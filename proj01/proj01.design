@@ -1,0 +1,74 @@
+
+
+CSE 320 Spring 2013
+
+Computer Project #1 -- Combinational Circuits
+
+a) Give your name and MSU PID:
+
+  Name: Jacob Riesser
+
+  MSU PID: A43730576
+   
+b) Complete the following truth tables to describe the Boolean functions which
+form the basis for your combinational circuits.  For each function, replace
+the hyphens with the appropriate entry (0, 1 or X), where X represents the
+"don't care" condition.
+
+      w x y z | Valid | Present |  Even | Prime
+     ---------+-------+---------+-------+-------
+  0   0 0 0 0 |   1   |    1    |   1   |   0
+  1   0 0 0 1 |   1   |    0    |   x   |   x
+  2   0 0 1 0 |   1   |    0    |   x   |   x
+  3   0 0 1 1 |   1   |    1    |   0   |   1
+  4   0 1 0 0 |   1   |    1    |   1   |   0
+  5   0 1 0 1 |   1   |    1    |   0   |   1
+  6   0 1 1 0 |   1   |    1    |   1   |   0
+  7   0 1 1 1 |   1   |    1    |   0   |   1
+  8   1 0 0 0 |   1   |    0    |   x   |   x
+  9   1 0 0 1 |   1   |    0    |   x   |   x
+  A   1 0 1 0 |   1   |    1    |   1   |   0
+  B   1 0 1 1 |   0   |    0    |   x   |   x
+  C   1 1 0 0 |   0   |    0    |   x   |   x
+  D   1 1 0 1 |   0   |    0    |   x   |   x
+  E   1 1 1 0 |   0   |    0    |   x   |   x
+  F   1 1 1 1 |   0   |    0    |   x   |   x
+ 
+
+c) Complete the following Karnaugh maps for your Boolean functions.  For each
+input combination, replace the hyphen with the appropriate entry (0, 1 or X).
+
+  Valid | y'z'| y'z | yz  | yz' |        Present | y'z'| y'z | yz  | yz' |
+  ------+-----+-----+-----+-----+        --------+-----+-----+-----+-----+
+   w'x' |  1  |  1  |  1  |  1  |           w'x' |  1  |  0  |  1  |  0  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   w'x  |  1  |  1  |  1  |  1  |           w'x  |  1  |  1  |  1  |  1  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   wx   |  0  |  0  |  0  |  0  |           wx   |  0  |  0  |  0  |  0  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   wx'  |  1  |  1  |  0  |  1  |           wx'  |  0  |  0  |  0  |  1  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+
+   Even | y'z'| y'z | yz  | yz' |          Prime | y'z'| y'z | yz  | yz' |
+   -----+-----+-----+-----+-----+          ------+-----+-----+-----+-----+
+   w'x' |  1  |  x  |  0  |  x  |           w'x' |  0  |  x  |  1  |  x  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   w'x  |  1  |  0  |  0  |  1  |           w'x  |  0  |  1  |  1  |  0  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   wx   |  x  |  x  |  x  |  x  |           wx   |  x  |  x  |  x  |  x  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+   wx'  |  x  |  x  |  x  |  1  |           wx'  |  x  |  x  |  x  |  0  |
+        +-----+-----+-----+-----+                +-----+-----+-----+-----+
+
+
+
+d) For each Boolean function, give the minimized sum of products expression.
+
+   Valid(w,x,y,z) = w' + x'y' + x'yz
+
+   Present(w,x,y,z) = w'x + w'x'z' + w'yz + wx'yz'
+
+   Even(w,x,y,z) = y'z' + yz'
+
+   Prime(w,x,y,z) = w'z
+

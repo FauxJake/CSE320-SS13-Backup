@@ -1,0 +1,18 @@
+/******************************************************************************
+	Project 05: Number Systems and Integer Representation
+	
+	Driver Module
+******************************************************************************/
+
+#include <stdio.h>
+#include "/user/cse320/lib/bitlib.h"
+
+int main()
+{
+	int I;
+	for(I='a';I<='z';I++)
+	{
+		printf(" %c %8\n, I, bit8(I));
+	}
+	return 0;
+}

@@ -1,0 +1,19 @@
+
+The "sim" manual lists some keys on the numeric keypad that help control the
+"sim" display:
+
+  5 -- redraw the screen
+  3 -- zoom in one level in the module hierarchy
+  9 -- zoom out one level in the module hierarchy
+
+On newer keyboards (including the Dell keyboards in 3353 EB), those operations
+are tied to different keys:
+
+  F12       -- redraw the screen
+  Page Up   -- zoom in one level in the module hierarchy
+  Page Down -- zoom out one level in the module hierarchy
+
+That is, the Function 12 key at the top of the keyboard refreshes the screen,
+while the "Page" keys on the block of six keys to the left of the numeric
+keypad control the level of modularization displayed.
+

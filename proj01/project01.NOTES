@@ -1,0 +1,133 @@
+
+Notes on Computer Project #1
+----------------------------
+
+Comments about the assignment and responses to frequently asked questions will
+be added to this file as necessary.
+
+***** comments added on 01/09/13 *****
+
+1) Please note the following statement from the assignment handout:
+
+  The deliverables for this assignment are:
+
+    proj01.design    -- the text file for your design
+    proj01.netlist.c -- the implementation file for your solution
+
+  Be sure to use the specified file names, and to submit your files for
+  grading via the "handin" program.
+
+2) Please review the information at:
+
+  ~cse320/General/intro.handin
+
+The "handin" utility, it is a program that allows you to submit files for
+grading.
+
+3) The minimized expressions for your four functions must be given in sum of
+products form.  That is, each function must be expressed using one or more
+products (AND terms), and at most one sum (OR term).
+
+The following are all examples of functions in sum of products form:
+
+  a() = AB' + AC + A'BC'
+  b() = A + BC
+  c() = ABC'
+  d() = B
+
+In contrast, the following functions are not in sum of products form:
+
+  e() = AB + C(D+E)
+  f() = (A+B)'
+
+Please note that both of those functions can be expressed in sum of products
+form:
+
+  e() = AB + CD + CE
+  f() = A'B'
+
+A minimized function which is given in sum of products form is desirable for
+several reasons:  it corresponds closely to the original formulation of the
+unminimized function (the truth table or minterm canonical form), and it can
+be implemented using "two-level logic" (AND gates, followed by a single OR
+gate).
+
+4) Please review the information at:
+
+  ~cse320/General/intro.sim
+
+As noted in that document, the "sim" software is only available on "north"
+and there are certain steps that you must take to run "sim" remotely.
+
+5) If you have not already done so, you will wish to complete the second
+self-study module ("lab02") before developing your solution to this project.
+The files for that exercise are available as:
+
+  ~cse320/Labs/lab02*
+
+That exercise will help you become familiar with the "sim" software.
+
+6) Be sure to avoid invalid "positions" for components, which results in an
+unreadable display.  Positions (row and column indicators) are restricted to
+two characters.  Thus, "9c" is valid, but "10c" is not.
+
+Here's the official statement from the "sim" manual (available as a PDF under
+"Related Links"):
+
+  The Schematic Descriptor (SD) entry positions the component on a
+  two-dimensional grid in the simulation-time display-window.  In their
+  simplest form, descriptors are given as two-character, quoted ASCII
+  strings.  This two character sequence specifies the row and column
+  coordinates of a virtual grid overlaying the display window.  For example,
+  "1a", "1b", "2c", specify row 1 column a, row 1 column b, and row 2 column
+  c.  The grid is virtual in the sense that the maximum extent of placements
+  occurring throughout all the SDs encountered in a system description are
+  mapped to the full extent of the window of the display.  Row and column
+  extents in a window will include all the ASCII characters between the
+  extremes of those used.  Row and column labeling are independent of each
+  other and the same labels could be used for each.
+
+If you find that you need more rows than columns, you might consider using
+letters for rows and digits for columns (for example, "a1" and "k7").  As
+noted in the paragraph above, you can even use notation such as "aa" and "dk",
+where letters are used to identify both rows and columns.
+
+7) The "Module" component allows a given C++ function to be treated the same
+way as a standard component, which is quite convenient for more complex
+circuits.  Here's the relevant text from the "sim" manual:
+
+  3.1. Hierarchy
+
+  For simulation models including more than a few gates, it is desirable to be
+  able to form hierarchical modules that may be used directly as model
+  components.  As an example consider the following HalfAdder module that is
+  defined in terms of primitive Xor and And gates. 
+
+    void HalfAdder( const SD & sd, const Signals & in, const Signals & out )
+    {
+      Module( sd, in, out ); // Module display at current schematic level
+      Xor( SD( sd, "1a" ), in, out[1] ); // Nested <Schematic Descriptor>
+      And( SD( sd, "2a" ), in, out[0] ); // Nested <Schematic Descriptor>
+    }
+
+  The above definition allows the subsequent use of the module in a manner
+  similar to the use of primitive components, such as:
+
+     HalfAdder( "1b", ( x, y ), ( carry, sum ) ); // Module usage
+
+Please note that it is necessary to list an additional parameter for each
+"SD" component inside the module:  the schematic descriptor from the next
+level up in the hierarchy.  From the "Xor" component above:
+
+  ... SD( sd, "1a" ) ...
+
+where "sd" is the formal argument name in the definition of "HalfAdder".
+
+One of the files from the third self-study module ("lab03.mux_bank.c")
+illustrates this technique.
+
+To summarize, each "SD" component inside function "circuits" will require two
+arguments:  "sd" and a two-character row and column indicator.
+
+--M. McCullen
+

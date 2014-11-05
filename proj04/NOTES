@@ -1,0 +1,87 @@
+
+Notes on Computer Project #4
+----------------------------
+
+Comments about the assignment and responses to frequently asked questions will
+be added to this file as necessary.
+
+***** comments added on 01/30/13 *****
+
+1) The following is a more complete example than is given on the handout.
+Assume the circuit is designed to process the following PID:
+
+  A20019802
+
+After removing all but the first occurrence of each digit, the remaining
+unique digits of this PID are:
+
+  A20198
+
+Thus, this circuit will generate a 4-bit representation of the sequence:
+
+  A20198A20198A...  (repeating the original order of the digits)
+
+The Boolean functions which generate the four-bit hexadecimal digits in this
+sequence can be reduced to:
+
+  W = z + wy'
+  X = 0
+  Y = wz'
+  Z = w'y'
+
+Four D flip-flops will be used to store the current hexadecimal digit, which
+is the input to the combinational logic.
+
+2) A diagram of your circuit might appear as follows:
+
+  Init -------------.
+  Clock-----------. |
+                  | |
+                  v v
+             W  +-----+  w               +-------+
+  .------------>| Dff |-------------.--->| Probe |
+  |          X  +-----+  x          |    +-------+
+  |  .--------->| Dff |----------.------>| Probe |
+  |  |       Y  +-----+  y       |  |    +-------+
+  |  |  .------>| Dff |-------.--------->| Probe |
+  |  |  |    Z  +-----+  z    |  |  |    +-------+
+  |  |  |  .--->| Dff |----.------------>| Probe |
+  |  |  |  |    +-----+    |  |  |  |    +-------+
+  |  |  |  |  +---------+  |  |  |  |
+  |  |  |  .--|         |<-.  |  |  |
+  |  |  |     |  Next   |     |  |  |
+  |  |  .-----|  Value  |<----.  |  |
+  |  |        | Combin- |        |  |
+  |  .--------| ational |<-------.  |
+  |           |  Logic  |           |
+  .-----------|         |<----------.
+              +---------+
+
+The only four inputs to the combinational logic are the outputs of the four D
+flip-flops.
+
+3) The "component" that you are to develop is a specialized counter.  It will
+receive two input signals (Init and Clock in the diagram above) and will
+produce four output signals representing the four-bit count (w, x, y and z in
+the diagram above).
+
+Thus, function "circuits" in your "sim" implementation should contain the four
+D flip-flops, as well as the combinational logic to advance to the next count
+in the sequence.
+
+Function "simnet", which is the test fixture for the specialized counter,
+should contain the two pulsers used to generate the initialization and clock
+signals, and the four probes used to display the four-bit count.
+
+The declaration of function "circuits" should be:
+
+  void circuits( SD, Signal, Signal, Signal, Signal, Signal, Signal );
+
+The six signals should have the following meanings:
+
+  1) Initialization signal
+  2) Clock signal
+  3) Four-bit count (most significant bit first)
+
+--M. McCullen
+

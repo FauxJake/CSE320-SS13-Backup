@@ -1,0 +1,38 @@
+/******************************************************************************
+  Function "simnet"   -- test bed for student circuits
+******************************************************************************/
+
+void simnet()
+{
+  Signal w, x, y, z, Valid, Present, Even, Prime;
+
+  // Insert your Switches here
+  Switch( SD("1a"), w, 'w');
+  Switch( SD("2a"), x, 'x');
+  Switch( SD("3a"), y, 'y');
+  Switch( SD("4a"), z, 'z');
+
+  circuits( SD("1b-4b"), w, x, y, z, Valid, Present, Even, Prime );
+
+  // Insert your Probes here
+  Probe(SD("1c", "Valid", Valid);
+  Probe(SD("2c", "Present", Present);
+  Probe(SD("3c", "Even", Even);
+  Probe(SD("4c", "Prime", Prime);
+}
+
+
+/******************************************************************************
+  Function "circuits" -- implementation of student circuits
+******************************************************************************/
+
+void circuits( SD sd, Signal w, Signal x, Signal y, Signal z, 
+  Signal Valid, Signal Present, Signal Even, Signal Prime )    
+{
+  Module( (sd, "circuits"), (w, x, y, z), (Valid, Present, Even, Prime) );
+
+  // Insert your declarations for any auxiliary Signals here
+
+  // Insert your circuit implementation here (Not, And, Or gates)
+}
+

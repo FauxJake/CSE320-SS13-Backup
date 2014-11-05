@@ -1,0 +1,64 @@
+
+            .global     add
+            .global     negate
+            .global     absolute
+            .global     sub
+            .global     mul
+            .global     divide
+            .global     remain
+            .global     power
+            .global     factorial
+
+            .section    ".text"
+            .align      4
+
+
+add:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+
+sub:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+
+negate: 
+
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+absolute:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+
+mul:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+divide:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+remain:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+power:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+factorial:
+            save        %sp,-96,%sp
+            mov         0,%i0
+            ba          done
+ 
+done:
+            ret
+            restore

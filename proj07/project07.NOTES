@@ -1,0 +1,237 @@
+
+Notes on Computer Project #7
+----------------------------
+
+Comments about the assignment and responses to frequently asked questions will
+be added to this file as necessary.
+
+***** comments added on 02/27/13 *****
+
+1) Please note the following statement from the assignment handout:
+
+  The deliverables for this assignment are:
+
+    proj07.makefile  -- the makefile which produces "proj07"
+    proj07.support.c -- the source code for your support module
+
+  Be sure to submit your files for grading via the "handin" program.
+
+It is possible to submit your solution files multiple times:  the last files
+that you submit will be graded.
+
+2) Please note that you are required to create a makefile which controls the
+translation of your program, and that the name of your executable file must be
+"proj07".
+
+In a "makefile", use the '\' character to continue a line.  For example:
+
+  proj: \
+    main.o \
+    one.o \
+    /user/cse320/two.o
+  <tab> gcc main.o \
+          one.o \
+          /user/cse320/two.o \
+          gcc -o proj
+
+The '\' must be the last character on a line (it cannot be followed by spaces
+or tabs).  Always use spaces (not tabs) at the start of continuation lines.
+
+3) I have supplied the following interface file (it contains the declaration
+of function "execute"):
+
+  ~cse320/Projects/project07.support.h
+
+I have also supplied the following interface file (it contains the declaration
+of the simulated hardware components):
+
+  ~cse320/Projects/project07.hardware.h
+
+Since those files may not be modified, there is no reason to copy them into
+your account.  Instead, use absolute pathnames in the appropriate preprocessor
+directives.  For example:
+
+  #include "/user/cse320/Projects/project07.support.h"
+  #include "/user/cse320/Projects/project07.hardware.h"
+
+Any program which uses those functions should contain the appropriate
+preprocessor directives.
+
+4) I have supplied the following object code module:
+
+  /user/cse320/Projects/project07.driver.o
+
+That file contains the object code definition of function "main", as well as
+the simulated hardware components.
+
+You may wish to create a stub for function "execute", then translate, link and
+execute the program to explore the behavior of the driver module.
+
+5) The driver module initializes some of the registers and memory locations
+before calling your support module for the first time.  An example of the
+output it produces:
+
+  Contents of control registers
+
+    IR:  00000000
+    PSR: 00800000
+
+  Contents of register file
+
+    R[00]: 00000000  R[08]: 000000FF  R[10]: 00000000  R[18]: 00000000
+    R[01]: 00000001  R[09]: 55555555  R[11]: 00000000  R[19]: 00000000
+    R[02]: 7FFFFFFF  R[0A]: 0000DDDD  R[12]: 00000000  R[1A]: 00000000
+    R[03]: 80000000  R[0B]: 00003333  R[13]: 00000000  R[1B]: 00000000
+    R[04]: 89ABCDEF  R[0C]: FFFFFFFF  R[14]: 00000000  R[1C]: 00000000
+    R[05]: A9876543  R[0D]: FFFFFFF0  R[15]: 00000000  R[1D]: 00000000
+    R[06]: 00004444  R[0E]: 00000002  R[16]: 00000000  R[1E]: 00000000
+    R[07]: 00000004  R[0F]: 00EEEEEE  R[17]: 00000000  R[1F]: 00000000
+
+The driver module displays the registers before and after calling "execute",
+and it alternates the NZVC bits between "1000" and "0001".
+
+6) Inside function "execute", you'll need to call function "read_reg_file" and
+then "write_reg_file", if the current machine language instruction updates the
+register file.
+
+Here's a rough outline for function "execute":
+
+  -- decompose the IR into the appropriate fields
+  -- use the 5-bit "rs1" and "rs2" fields as signals to the register file
+  -- compute a result based on the values copied out of the register file
+  -- use the 5-bit "rd" field as a signal and update the register file
+
+The following example shows valid invocations of those functions (available as
+"~cse320/Projects/project07.demo.c"):
+
+  #include <stdio.h>
+
+  #include "/user/cse320/Projects/project07.hardware.h"
+  #include "/user/cse320/Projects/project07.support.h"
+
+  /**************************************************************************
+    Demonstrate how to use functions "read_reg_file" and "write_reg_file".
+
+    Translation:
+      gcc -Wall project07.driver.o project07.demo.c
+  **************************************************************************/ 
+
+  void execute()
+  {
+    signal5 rd, rs1, rs2;
+    signal32 RS1, RS2, RD;
+
+    rs1 = 3;
+    rs2 = 5;
+
+    read_reg_file( rs1, rs2, &RS1, &RS2 );
+
+    printf( "Inside execute -- rs1: %d  RS1: %08X\n\n", rs1, RS1 );
+    printf( "Inside execute -- rs2: %d  RS2: %08X\n\n", rs2, RS2 );
+
+    rd = 1;
+    RD = 0x12345678;
+
+    write_reg_file( rd, RD );
+  };
+
+Of course, you won't use hard-coded constants for the 5-bit register numbers
+or the 32-bit value on the "RD input port".
+
+7) Please note that the "signal" types are all aliases for type "unsigned"
+(type "unsigned long int", to be more explicit).
+
+Consider the following statement:
+
+  signal5 rd;
+
+Variable "rd" is actually 32 bits wide. However, using "signal5" will serve as
+a reminder that only the least significant 5 bits of that variable are
+meaningful.
+
+A few comments about C integral types on "north":
+
+  Type "long" is 32 bits in length, and type "long long" is 64 bits
+  in length.
+
+  The qualifiers "unsigned" and "signed" can be used with any
+  integral type.
+
+  Conversions between signed and unsigned integral types is permitted.
+
+Thus, the following are all valid:
+
+  unsigned long A, B;
+  signed long C, D;
+  unsigned long long E, F;
+  signed long long G, H;
+
+  C = (signed long) A;
+  B = (unsigned long) D;
+  G = (signed long long) E;
+  F = (unsigned long long) H;
+
+Please note that "unsigned", "unsigned long" and "unsigned long int" are
+synonymous, as are "signed", "signed long" and "signed long int".
+
+8) Be sure to test your solution with a variety of different 32-bit SPARC
+instructions.  To generate the test cases, you might consider using the
+"gcc" package to do some of the work of translating the assembly language
+instructions into machine language.
+
+For example, you could call "memdump" and observe the ".text" area of memory.
+Example #14 uses this approach.
+
+Or, you could use "dis" to observe the machine language instructions:
+
+  <...> gcc -c example14.s
+  <...> dis example14.o
+
+You could use "dis a.out", but the output would contain the machine language
+instructions for all of the library functions, as well as your function.
+
+Some of the examples in the course pack contain memory dumps which display
+machine language instructions.  From Example #14:
+
+  MEMORY CONTENTS [00010aec to 00010d6b]
+    00010aec: 9d e3 bf a0 31 00 00 86 b0 16 21 d4 e0 06 00 00
+
+The "31000086" is from a SETHI instruction, and the "b01621d4" is from an OR
+instruction (the pair of instructions derived from the "set" synthetic
+instruction we talked about at lecture).
+
+Another approach would be to turn some assembly code into object code, then
+use "dis" to match the machine language insructions back to assembly language
+instructions.  Here's a quick example:
+
+  <...> cat test.s
+
+        add     %r5, %r6, %r10
+        orcc    %r7, 0xff, %r8
+
+  <...> gcc -c test.s
+
+  <...> dis test.o
+                ****   DISASSEMBLER  ****
+
+
+  disassembly for test.o
+
+  section .text
+             0:  94 01 40 06         add          %g5, %g6, %o2
+             4:  90 91 e0 ff         orcc         %g7, 0xff, %o0
+
+Notice that you don't have to create complete assembly language programs to
+use this technique.
+
+One comment:  notice that "dis" uses the alternate notation for the general
+purpose registers (see page 11 of the course pack, or Table 4-1 in the SPARC
+Architecture Manual).  In that notation, the 32 registers are broken up into
+four groups of eight registers:  %g0 is the same as %r0, %o0 is the same as
+%r8, %l0 is the same as %r16, %i0 is the same as %r24, and so on.
+
+9) The SPARC Architecture Manual (available on the course website) is an
+excellent resource for this project, particularly Appendices B and C.
+
+--M. McCullen
+

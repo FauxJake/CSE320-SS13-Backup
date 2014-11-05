@@ -1,0 +1,95 @@
+
+
+Lab Exercise #5 -- Number Systems and Internal Representation
+
+A. Fixed Point Numbers
+
+1. Perform each of the indicated base conversions.  For readability, write a
+blank between each group of four digits in binary and hexadecimal numbers.
+
+a) Give the hexadecimal equivalent of each of the following binary numbers.
+
+   1001 1100 0010 1011 1111 0101 0000 0111 = ______________________________
+
+   0001 1010 0011 1101 0110 0100 1000 1110 = ______________________________
+
+b) Give the binary equivalent of each of the following hexadecimal numbers.
+
+   5e8d = ________________________________________________
+
+   a72b = ________________________________________________
+
+c) Give the hexadecimal equivalent of the following decimal numbers.
+
+   599 = ______________________________
+
+   253 = ______________________________
+
+d) Give the binary equivalent of the following decimal numbers.
+
+   125 = ______________________________
+
+   248 = ______________________________
+
+e) Give the decimal equivalent of each of the following numbers.
+ 
+   47f base 16 = __________________
+
+   162 base 7 =  __________________
+
+
+2. When you have completed Question (1), use the executable program in the
+file named "~cse320/Labs/lab05.convert" to check your work.
+
+B. ASCII Representation
+
+1. Give the ASCII representation of each of the following character strings in
+hexadecimal.  Don't forget to include any spaces (blanks).
+
+   "abcd"       _______________________________________________________________
+
+   "ABCD"       _______________________________________________________________
+
+   "Go State!"  _______________________________________________________________
+
+   "43.7"       _______________________________________________________________
+
+   "CSE 320"    _______________________________________________________________
+
+2. When you have completed your work, use the executable program in the file
+named "~cse320/Labs/lab05.ascii" to check your work.
+
+
+
+C. Twos Complement Representation
+
+Suppose that a machine uses twelve-bit registers to hold signed integers and
+uses twos complement arithmetic.
+
+1. What is the largest signed number that can be represented?  Give your
+answer in both binary and decimal.
+
+   Binary:   ________________________________________________
+
+   Decimal:  ________________________________________________
+
+2. What is the smallest signed number that can be represented?  Give your
+answer in both binary and decimal.
+
+   Binary:   ________________________________________________
+
+   Decimal:  ________________________________________________
+
+3. Give the twelve-bit internal representation of each of the following
+decimal numbers.
+
+   +317   ________________________________________________
+
+   -183   ________________________________________________
+
+4. Give the decimal value of each of the following twelve-bit numbers.
+
+   1110 1011 0011  ________________________
+
+   0001 1011 1011  ________________________
+
